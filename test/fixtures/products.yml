@@ -1,0 +1,16 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: 
+  description: 
+  price: 
+  active: 
+  tags: MyText
+
+two:
+  name: 
+  description: 
+  price: 
+  active: 
+  tags: MyText
