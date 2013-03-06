@@ -2,29 +2,43 @@ require "minitest_helper"
 
 describe Product do
 
-  let(:product) { Product.new }
-  
-
-  it "must be valid" do    
+  it "must be valid" do
+    admin = Admin.create email: 'admin@store.com', password: '123pass', password_confirmation: '123pass'
+    product = Product.create name: 'TV', admin_id: admin.id, description: 'Samsung Smart TV', price: 120000.00, inventory: 2, active: true
     
-    product.name = 'Tv'
-    product.description = 'Samsung Smartv'
-    product.price = 22.00
-    product.inventory = 2
-    product.active = true
-    product.tags = "tv, smartv, samsung"    
     product.valid?.must_equal true
   end
 
   it "must be invalid without attributes" do
-    product.valid?.must_equal false
+    empty_product = Product.new
+    empty_product.valid?.must_equal false
 
-    product.errors.size.must_equal 6
-    product.errors[:name].wont_be_nil
-    product.errors[:description].wont_be_nil
-    product.errors[:inventory].wont_be_nil
-    product.errors[:active].wont_be_nil
-    product.errors[:tags].wont_be_nil    
+    empty_product.errors.size.must_equal 8
+    empty_product.errors[:admin_id].wont_be_nil
+    empty_product.errors[:name].wont_be_nil
+    empty_product.errors[:description].wont_be_nil
+    empty_product.errors[:price].wont_be_nil
+    empty_product.errors[:inventory].wont_be_nil
+    empty_product.errors[:active].wont_be_nil
+  end
+  
+  it "No two products with the same name for the same user could coexists" do
+    admin = Admin.create email: 'admin@store.com', password: '123pass', password_confirmation: '123pass'
+    product1 = Product.create name: 'TV', admin_id: admin.id, description: 'Samsung Smart TV', price: 120000.00, inventory: 2, active: true
+    product2 = Product.create name: 'tv', admin_id: admin.id, description: 'New Samsung Smart TV', price: 12500.00, inventory: 1, active: true
+    
+    product1.valid?.must_equal true
+    product2.valid?.must_equal false
+    product2.errors[:name].wont_be_empty
+  end
+  
+  it "price must be greater than cero " do
+    admin = Admin.create email: 'admin@store.com', password: '123pass', password_confirmation: '123pass'
+    product = Product.new name: 'TV', description: 'Samsung Smart TV', price: 0.00, inventory: 2, active: true, tags: "tv, smartv, samsung"
+    
+    product.admin = admin
+    
+    product.valid?.must_equal false
   end
 
 end
