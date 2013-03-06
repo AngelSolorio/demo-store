@@ -5,5 +5,6 @@ class Product < ActiveRecord::Base
 	validates :name, :uniqueness => { :scope => :admin_id, :message => "Nombre de producto repetido", :case_sensitive => false }
 	validates :name, :admin_id, :description, :price, :inventory, :active, presence: true
 	validates :price, :numericality => { :greater_than => 0 }
+	validates :inventory, :numericality => { :only_integer => true, :greater_than => -1 }
 
 end
