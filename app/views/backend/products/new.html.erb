@@ -1,0 +1,34 @@
+<h2>New product</h2>
+<%= form_for @product, url: backend_products_path, html: { multipart: true } do |form| %>
+	<%= form.label :name %>
+	<%= form.text_field :name, class: 'medium' %>
+	<%= field_error @product, :name %>
+	<p>
+	<%= form.label :description %><br>
+	<%= form.text_area :description, :size => '40x5', class: 'medium' %>
+	<%= field_error @product, :description %>	
+	<p>
+	<%= form.label :price %>
+	<%= form.text_field :price, class: 'medium' %>
+	<%= field_error @product, :price %>
+	<p>
+	<%= form.label :inventory %>
+	<%= form.text_field :inventory, class: 'medium' %>
+	<%= check_box @product, :int %>
+	<%= field_error @product, :inventory %>
+	<p>
+	<%= form.label :active %>
+	<%= form.check_box :active %>
+	<%= field_error @product, :active %>
+	<p>
+	<%= form.label :tags %><br>
+	<%= form.text_field :tags, class: 'medium' %>
+	<%= field_error @product, :tags %>
+	<p>
+	
+	<% @product.images.each do |image| %>	
+  	<%= form.file_field image %><br>
+	<% end %>
+
+  <%= form.submit "Save", class: 'btn large', id: 'update' %>
+<% end %>	

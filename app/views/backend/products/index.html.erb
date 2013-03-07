@@ -1,19 +1,20 @@
 <div id="content_products">
   <h2>Products</h2>
-  <table>
+  <%= link_to "New", new_backend_product_path %><p>
+  <table border="0">
     <% @products.each do |product| %>
-    <tr class="<%= cycle('list_line_odd', 'list_line_even') %>" >
-      <td>
+    <tr>
+      <td style="width:300px">
       -------
       </td>
-      <td class="list_description" >
+      <td class="list_description" style="width:150px">
         <dl>
           <dt><%= product.name %></dt>
           <!--<dd><%= product.description %></dd>-->
         </dl>
       </td>
-      <td class="list_actions" >
-        <%= link_to 'Show', backend_product_path(product) %><br/>
+      <td class="list_actions" style="width:100px; text-align:center">
+        <!--<%= link_to 'Show', backend_product_path(product) %><br/>-->
         <%= link_to 'Edit', edit_backend_product_path(product) %><br/>
       </td>
     </tr>
