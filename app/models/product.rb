@@ -7,4 +7,5 @@ class Product < ActiveRecord::Base
   validates :price, :numericality => { :greater_than => 0 }
   validates :inventory, :numericality => { :only_integer => true, :greater_than => -1 }
 
+  accepts_nested_attributes_for :images
 end
