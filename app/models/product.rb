@@ -13,4 +13,5 @@ class Product < ActiveRecord::Base
 
   scope :my_products, -> (admin) { where(:admin_id => admin.id).order(:id) }
   scope :my_product, -> (product_id, admin) { where(:id => product_id, :admin_id => admin.id) }
+  
 end
