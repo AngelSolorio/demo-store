@@ -33,4 +33,8 @@ module ApplicationHelper
       end
     end
   end
+
+  def debug(object)
+    Rails.logger.debug object
+  end
 end

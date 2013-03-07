@@ -25,9 +25,9 @@
 	<%= form.text_field :tags, class: 'medium' %>
 	<%= field_error @product, :tags %>
 	<p>
-	
-	<% @product.images.each do |image| %>	
-  	<%= form.file_field image %><br>
+
+	<%= form.fields_for :images do |images| %>	
+  	<%= images.file_field :image %><br>
 	<% end %>
 
   <%= form.submit "Save", class: 'btn large', id: 'update' %>

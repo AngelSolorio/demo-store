@@ -16,12 +16,18 @@ class Backend::ProductsController < ApplicationController
 	  @product = Product.new(product_params)
 	  @product.admin = current_admin
 
+	  unless params[:product][:images_attributes].nil?
+	  		params[:product][:images_attributes].each do |i, v|
+	  			@product.images.build v
+	  		end
+	  end
+
 	  if @product.valid?
 	  	@product.save
 	  	return redirect_to backend_products_path
 	  end
 
-	  render :new
+	  respond_with @product
 	end
 
 	protected
