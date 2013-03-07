@@ -1,9 +1,11 @@
 class Image < ActiveRecord::Base
-	belongs_to :product	
-	
-	accepts_nested_attributes_for :product, :reject_if => :all_blank
+  belongs_to :product
 
-	has_attached_file :image, styles: { medium: '200x200>', thumb: '48x48>' }
+  validates :product_id, presence: true
+  
+  accepts_nested_attributes_for :product, :reject_if => :all_blank
 
-	validates_attachment :image, size: { less_than: 501.kilobytes }, content_type: { content_type: 'image/jpeg' }
+  has_attached_file :image, styles: { medium: '360x>', thumb: '190x>' }
+
+  validates_attachment :image, size: { less_than: 1.megabytes }, content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png'] }
 end
