@@ -1,23 +1,20 @@
 <div id="content_products">
-  <h2>Products</h2>
+  <h2>My Products</h2>
   <%= link_to "New", new_backend_product_path %><p>
-  <table border="0">
+  <div id="list_products">
     <% @products.each do |product| %>
-    <tr>
-      <td style="width:300px">
-      -------
-      </td>
-      <td class="list_description" style="width:150px">
-        <dl>
-          <dt><%= product.name %></dt>
-          <!--<dd><%= product.description %></dd>-->
-        </dl>
-      </td>
-      <td class="list_actions" style="width:100px; text-align:center">
-        <!--<%= link_to 'Show', backend_product_path(product) %><br/>-->
-        <%= link_to 'Edit', edit_backend_product_path(product) %><br/>
-      </td>
-    </tr>
-    <% end %>
-  </table>
+    <dl>
+      <dt>
+        <%= image_tag product.images.first.image.url(:thumb) %>
+        <%= product.name %>
+      </dt>
+      <dd>
+          <p class="description" ><%= product.description %></p>          
+      </dd>
+      <dt>
+        <%= link_to "Edit", edit_backend_product_path(product) %>
+      </dt>
+    </dl>
+    <% end %>s
+  </div>
 </div>
