@@ -40,7 +40,7 @@ module ApplicationHelper
 
   def show_image_to_product(product)
     #product.images.each do |image|
-      image_tag product.images.first.image.url(:thumb)
+      image_tag product.images.first.image.url(:thumb) if product.images.size > 1
     #end
   end
 end
