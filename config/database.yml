@@ -2,15 +2,8 @@ development:
   adapter: postgresql
   encoding: unicode
   database: store_development
-<<<<<<< HEAD
-  timeout: 5000
   pool: 5
   host: localhost
-  username: postgres  
-=======
-  pool: 5
-  host: localhost
->>>>>>> 7bccd462eae39eb264c46062a25c58957f61e60c
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -21,19 +14,10 @@ test:
   database: store_test
   pool: 5
   host: localhost
-<<<<<<< HEAD
-  username: postgres
-=======
->>>>>>> 7bccd462eae39eb264c46062a25c58957f61e60c
 
 production:
   adapter: postgresql
   encoding: unicode
   database: store_production
   pool: 5
-<<<<<<< HEAD
   host: localhost
-  username: postgres
-=======
-  host: localhost
->>>>>>> 7bccd462eae39eb264c46062a25c58957f61e60c
