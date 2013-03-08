@@ -37,4 +37,10 @@ module ApplicationHelper
   def debug(object)
     Rails.logger.debug object
   end
+
+  def show_image_to_product(product)
+    #product.images.each do |image|
+      image_tag product.images.first.image.url(:thumb)
+    #end
+  end
 end

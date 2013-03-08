@@ -5,16 +5,17 @@
     <% @products.each do |product| %>
     <dl>
       <dt>
-        <%= image_tag product.images.first.image.url(:thumb) %>
+        <%= show_image_to_product(product) %>
         <%= product.name %>
       </dt>
       <dd>
           <p class="description" ><%= product.description %></p>          
       </dd>
       <dt>
-        <%= link_to "Edit", edit_backend_product_path(product) %>
+        <%= link_to "Ver", backend_product_path(product) %>
+        <%= link_to "Editar", edit_backend_product_path(product) %>
       </dt>
     </dl>
-    <% end %>s
+    <% end %>
   </div>
 </div>

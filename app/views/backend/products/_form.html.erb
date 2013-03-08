@@ -1,5 +1,4 @@
-<%= link_to "Regresar", backend_products_path %><p>
-<%= form_for product, url: backend_products_path, html: { multipart: true } do |form| %>
+<%= form_for product, url: backend_product_path(product), html: { multipart: true } do |form| %>
 	<%= form.label :name %>
 	<%= form.text_field :name %>
 	<%= field_error product, :name %>
@@ -26,12 +25,23 @@
 	<%= field_error product, :tags %>
 	<p>
 
-	<div id="images_product" style="position:absolute; top: 120px; left: 600px">
+	<div id="images_product" style="position:absolute; top: 60px; left: 550px">
 	<h3>Change image</h3>	
-  <%= form.fields_for :images do |images| %>	
-  <%= images.file_field :image %><br>
-	<% end %>
+  <% @product.images.each do |img| %>
+    <%= form.fields_for :images, img do |builder| %>
+      <% if img.new_record? %>
+        <%= builder.label :avatar %>
+        <%= builder.file_field :avatar %>
+      <% else %>
+        <%= image_tag img.image.url(:thumb) %>
+        <%= builder.check_box :_destroy %>
+        <%= builder.label :_destroy, 'Eliminar' %>
+      <% end %>
+      <br />
+    <% end %>
+  <% end %>
 	</div>
 
   <%= form.submit "Save", class: 'btn large', id: 'update' %>
-<% end %>	
+<% end %><p>
+<%= link_to "Regresar", backend_products_path %>
