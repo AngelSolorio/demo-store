@@ -5,9 +5,9 @@ class Product < ActiveRecord::Base
   has_many :images
 
   validates :name, :admin_id, :description, :price, :inventory, presence: true
-  validates :name, :uniqueness => { :scope => :admin_id, :message => "Nombre de producto repetido", :case_sensitive => false }  
+  validates :name, :uniqueness => { :scope => :admin_id, :message => "Nombre de producto repetido", :case_sensitive => false }
   validates :price, :numericality => { :greater_than => 1, :message => "Precio incorrecto" }
-  validate :inventory => { :only_integer => true, :greater_than_or_equal_to => -1, :message => "No se permiten cantidades negativas" }
+  validates :inventory, :numericality => { :only_integer => true, :greater_than_or_equal_to => -1, :message => "No se permiten cantidades negativas" }
 
   accepts_nested_attributes_for :images
 

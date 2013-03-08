@@ -13,7 +13,7 @@ describe Product do
     empty_product = Product.new
     empty_product.valid?.must_equal false
 
-    empty_product.errors.size.must_equal 9
+    empty_product.errors.size.must_equal 7
     empty_product.errors[:admin_id].wont_be_nil
     empty_product.errors[:name].wont_be_nil
     empty_product.errors[:description].wont_be_nil
@@ -40,7 +40,7 @@ describe Product do
     product.errors[:price].wont_be_empty
   end
   
-  it "inventory must be an integer an greater than -1" do
+  it "inventory must be an integer and greater than -1" do
     admin = Admin.create email: 'admin@store.com', password: '123pass', password_confirmation: '123pass'
     product = Product.new name: 'TV', admin_id: admin.id, description: 'Samsung Smart TV', price: 120000.00, inventory: -2, active: true
     
