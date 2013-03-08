@@ -35,12 +35,12 @@ module ApplicationHelper
   end
 
   def debug(object)
-    Rails.logger.debug object
+    Rails.logger.warn object
   end
 
   def show_image_to_product(product)
     #product.images.each do |image|
-      image_tag product.images.first.image.url(:thumb) if product.images.size > 1
+      image_tag product.images.first.image.url(:thumb) if product.images.count >= 1
     #end
   end
 end

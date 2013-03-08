@@ -1,3 +1,5 @@
+<%= flash[:alert] %>
+
 <%= form_for product, url: backend_product_path(product), html: { multipart: true } do |form| %>
 	<%= form.label :name %>
 	<%= form.text_field :name %>
@@ -30,8 +32,7 @@
   <% @product.images.each do |img| %>
     <%= form.fields_for :images, img do |builder| %>
       <% if img.new_record? %>
-        <%= builder.label :avatar %>
-        <%= builder.file_field :avatar %>
+        <%= builder.file_field :image %>
       <% else %>
         <%= image_tag img.image.url(:thumb) %>
         <%= builder.check_box :_destroy %>
