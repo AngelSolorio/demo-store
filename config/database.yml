@@ -2,14 +2,15 @@ development:
   adapter: postgresql
   encoding: unicode
   database: store_development
-<<<<<<< HEAD
-  timeout: 5000
   pool: 5
   host: localhost
+<<<<<<< HEAD
   username: postgres  
 =======
   pool: 5
   host: localhost
+>>>>>>> c1e3998286d330929ce33eea918f680fe5db31e0
+=======
 >>>>>>> c1e3998286d330929ce33eea918f680fe5db31e0
 
 # Warning: The database defined as "test" will be erased and
@@ -22,7 +23,10 @@ test:
   pool: 5
   host: localhost
 <<<<<<< HEAD
+<<<<<<< HEAD
   username: postgres
+=======
+>>>>>>> c1e3998286d330929ce33eea918f680fe5db31e0
 =======
 >>>>>>> c1e3998286d330929ce33eea918f680fe5db31e0
 
@@ -33,6 +37,9 @@ production:
   pool: 5
   host: localhost
 <<<<<<< HEAD
+<<<<<<< HEAD
   username: postgres
+=======
+>>>>>>> c1e3998286d330929ce33eea918f680fe5db31e0
 =======
 >>>>>>> c1e3998286d330929ce33eea918f680fe5db31e0
