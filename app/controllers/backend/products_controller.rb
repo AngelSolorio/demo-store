@@ -48,7 +48,15 @@ class Backend::ProductsController < ApplicationController
 		product_params = permit_params_product
 		product_params[:inventory] = -1 if params[:product][:inventory_check] == '1'
 
-		if @product.update_attributes(product_params)
+		upload_files params[:product][:images_attributes]
+
+		params[:product][:images_attributes].each do |key, value| 						
+			if value[:_destroy] == '1'			
+				@product.images.find(value[:id]).delete
+			end
+		end
+
+		if @product.update_attributes(product_params)			
       return redirect_to backend_product_path(@product), notice: "Producto actualizado"
 		end
 
@@ -66,13 +74,13 @@ class Backend::ProductsController < ApplicationController
   end
 
   def permit_params_product
-  	params.require(:product).permit(:name, :description, :price, :inventory, :active, :tags, images_attributes: [:id, :image, :_destroy])
+  	params.require(:product).permit(:name, :description, :price, :inventory, :active, :tags)
   end
 
   def upload_files files
   	unless files.blank?
 	  		files.each do |key, value|
-	  			@product.images.build value
+	  			@product.images.build value if value[:_destroy].nil?
 	  		end
 	  end
   end
