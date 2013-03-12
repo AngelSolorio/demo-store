@@ -7,17 +7,19 @@ describe Backend::ProductsController do
   
   describe 'show' do
     it "when admin have no products" do
-      stub_current_admin 200
+      stub_current_admin 100
 
-      #get :show
+      get :new
 
       assert_redirected_to new_backend_product_path
     end
 
     it "when admin have products" do
-      @product = Product.my_product(1, (stub_current_admin 100)).first
+      puts stub_current_admin.inspect
       
-      #get :show
+      @product = Product.my_products(stub_current_admin).first
+      
+      get :show
 
       assert_not_nil(@product, '')
       assert_response :success
@@ -29,22 +31,13 @@ describe Backend::ProductsController do
   describe 'new' do
     let(:params) {
       {
-        product: { name: 'Toshiba TV', description: 'Toshiba 3D Smart TV 50"', price: 1200, inventory: 2, active: true },
-        admin: { id: 1 } 
+        product: { name: 'Toshiba TV', description: 'Toshiba 3D Smart TV 50"', price: 1200, inventory: 2, active: true }
       }
     }
     
     it "should method new display a form to register a new product" do
-      [:params][:admin][:id] = 2
+      stub_current_admin 200
       
-      get :new, params
-
-      assert_response :success
-      assert_template :new
-      assigns[:product].wont_be_nil
-    end
-
-    it "should method new display a form to register a new product even if admin already has products" do
       get :new, params
 
       assert_response :success
@@ -54,29 +47,19 @@ describe Backend::ProductsController do
   end
   
   describe 'edit' do
-    let(:params) {
-      {
-        product: { id: 1, name: 'Samsung TV', description: 'Samsung Smart TV 46"', price: 8500, inventory: 4, active: true } 
-      }
-    }
-    
     it "should method edit display a form to edit the product attributes if admin own the product" do
-      @product = Product.my_product(params[:product][:id], (stub_current_admin 100)).first
+      get :edit
       
-      #get :edit, { 'product_id' => params[:id]}
-      
-      assert_not_nil(@product, '')
       assert_response :success
       assert_template :edit
       assigns[:product].wont_be_nil
     end
 
     it "should redirect to new when user have no products to edit" do
-      @product = Product.my_product(params[:product][:id], (stub_current_admin 200)).first
-
-      #get :edit
+      stub_current_admin 200
+    
+      get :edit
       
-      assert_nil(@product, '')
       assert_redirected_to new_backend_product_path
       flash[:notice].wont_be_nil
     end
@@ -85,21 +68,14 @@ describe Backend::ProductsController do
   describe 'update' do
     let(:params) {
       {
-        product: { id: 2, name: 'Samsung TV', description: 'Samsung Smart TV 46"', price: 8500, inventory: 4, active: true }
+        product: { id: 1, name: 'Samsung TV', description: 'Samsung Smart TV 46"', price: 8500, inventory: 4, active: true,
+          admin_attributes: { id: 100 }
+        }
       }
     }
-  
-    it 'should redirect to create product when the admin is not logged in' do
-      stub_current_admin 200
-
-      #put :update, params
-
-      assert_redirected_to new_backend_product_path
-      flash[:notice].wont_be_nil
-    end
 
     it "should update a product and redirect to product show" do
-      #put :update, params
+      put :update, params
 
       assert_redirected_to backend_product_path
       flash[:notice].wont_be_nil
@@ -108,7 +84,7 @@ describe Backend::ProductsController do
     it "should display edit form if product is invalid" do
       params[:product][:name] = nil
 
-      #put :update, params
+      put :update, params
 
       assert_response :success
       assert_template :edit
