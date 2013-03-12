@@ -9,7 +9,9 @@ describe Backend::ProductsController do
     it "when haven't product" do          
       get :show, id: 1
 
-      assert_redirected_to backend_products_path
+      #get :show
+
+      assert_redirected_to new_backend_product_path
     end
 
     it "when have products" do      
