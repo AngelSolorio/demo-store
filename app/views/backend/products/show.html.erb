@@ -2,7 +2,7 @@
 
 	Nombre: <%= @product.name %><br />
 	Descripcion: <%= @product.description %><br />
-	Precio: <%= @product.price %><br />
+	Precio: <%= number_to_currency(@product.price)%><br />
 	Inventario: <%= @product.inventory > 0 ? @product.inventory : "Infinito" %><br />
   Tags: <%= @product.tags %><p>
 	
