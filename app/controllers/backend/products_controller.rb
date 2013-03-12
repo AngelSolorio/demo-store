@@ -1,38 +1,38 @@
 class Backend::ProductsController < ApplicationController
-	before_action :authenticate!
+  before_action :authenticate!
   before_action :verify_admin_and_product, only: [:show, :edit, :update]
 
-	def index
-		@products = Product.my_products(current_admin)
-	end
+  def index
+    @products = Product.my_products(current_admin)
+  end
 
-	def new
-		@product = Product.new
-		5.times { @product.images.build }
-	end
+  def new
+    @product = Product.new
+    5.times { @product.images.build }
+  end
 
-	def show
-		#@product = Product.my_product(params[:id], current_admin).first
+  def show
+    #@product = Product.my_product(params[:id], current_admin).first
     #redirect_to backend_products_path
-	end
+  end
 
-	def create
-	  @product = Product.new(permit_params_product)
-	  @product.inventory = -1 if params[:product][:inventory_check] == "1" 
-	  @product.admin = current_admin
-	  upload_files params[:product][:images_attributes]
+  def create
+    @product = Product.new(permit_params_product)
+    @product.inventory = -1 if params[:product][:inventory_check] == "1" 
+    @product.admin = current_admin
+    upload_files params[:product][:images_attributes]
 
-	  if @product.save
-	  	return redirect_to backend_products_path, notice: "Producto creado"
-	  end
+    if @product.save
+      return redirect_to backend_products_path, notice: "Producto creado"
+    end
 
-	  flash[:notice] = "Product no creado"
-	  5.times { @product.images.build }
-	  render :new 
-	end
+    flash[:notice] = "Product no creado"
+    5.times { @product.images.build }
+    render :new 
+  end
 
-	def edit
-   	@product = Product.my_product(params[:id], current_admin).first
+  def edit
+    @product = Product.my_product(params[:id], current_admin).first
     
     if @product.nil?
       return redirect_to backend_products_path, alert: "Producto no encontrado"
@@ -44,31 +44,31 @@ class Backend::ProductsController < ApplicationController
       @product.inventory = ""
       @product.inventory_check = true 
     end
-	end
+  end
 
-	def update 
-		product_params = permit_params_product
-		product_params[:inventory] = -1 if params[:product][:inventory_check] == '1'
+  def update 
+    product_params = permit_params_product
+    product_params[:inventory] = -1 if params[:product][:inventory_check] == '1'
 
-		upload_files params[:product][:images_attributes]
+    upload_files params[:product][:images_attributes]
 
-		params[:product][:images_attributes].each do |key, value| 						
-			if value[:_destroy] == '1'			
-				@product.images.find(value[:id]).delete
-			end
-		end
+    params[:product][:images_attributes].each do |key, value|             
+      if value[:_destroy] == '1'      
+        @product.images.find(value[:id]).delete
+      end
+    end
 
-		if @product.update_attributes(product_params)			
+    if @product.update_attributes(product_params)     
       return redirect_to backend_product_path(@product), notice: "Producto actualizado"
-		end
+    end
 
-		flash[:alert] = "Producto no actualizado"
+    flash[:alert] = "Producto no actualizado"
     (5 - @product.images.size).times { @product.images.build }
     return render action: 'edit'
-	end
+  end
 
-	protected
-	def verify_admin_and_product
+  protected
+  def verify_admin_and_product
     @product = Product.my_product(params[:id], current_admin).first
     if @product.nil?
       return redirect_to backend_products_path, alert: "Producto no encontrado"
@@ -76,14 +76,14 @@ class Backend::ProductsController < ApplicationController
   end
 
   def permit_params_product
-  	params.require(:product).permit(:name, :description, :price, :inventory, :active, :tags)
+    params.require(:product).permit(:name, :description, :price, :inventory, :active, :tags)
   end
 
   def upload_files files
-  	unless files.blank?
-	  		files.each do |key, value|
-	  			@product.images.build value if value[:_destroy].nil?
-	  		end
-	  end
+    unless files.blank?
+        files.each do |key, value|
+          @product.images.build value if value[:_destroy].nil?
+        end
+    end
   end
 end
