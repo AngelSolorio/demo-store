@@ -1,6 +1,10 @@
 require "minitest_helper"
 
 describe Backend::SessionController do
+  before do 
+    destroy_session!
+  end
+  
   describe 'new' do
     it 'success' do
       get :new

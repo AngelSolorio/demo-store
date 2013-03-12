@@ -12,6 +12,8 @@ class Backend::ProductsController < ApplicationController
 	end
 
 	def show
+		#@product = Product.my_product(params[:id], current_admin).first
+    #redirect_to backend_products_path
 	end
 
 	def create
