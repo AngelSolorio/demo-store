@@ -15,6 +15,7 @@ describe Backend::ProductsController do
     it "when have products" do      
       get :index
 
+      assert_not_nil(@products, '')
       assert_response :success
       assert_template :index
       assigns[:products].wont_be_nil
