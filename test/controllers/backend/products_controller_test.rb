@@ -7,17 +7,15 @@ describe Backend::ProductsController do
   
   describe 'show' do
     it "when haven't product" do          
-      get :show, id: 1
+      get :show, id: 2    
 
-      #get :show
-
-      assert_redirected_to new_backend_product_path
+      assert_response :success    
+      assigns[:product].wont_be_nil      
     end
 
     it "when have products" do      
       get :index
-
-      assert_not_nil(@products, '')
+      
       assert_response :success
       assert_template :index
       assigns[:products].wont_be_nil
