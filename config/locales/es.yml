@@ -1,6 +1,6 @@
 es:
 
-  app_name: 'HueHue'
+  app_name: 'Tienda de Productos'
 
   actions:
     update: 'Actualizar'
@@ -31,6 +31,18 @@ es:
         email: 'Correo electronico'
       new:
         already_have_profile: 'Usted ya cuenta con perfil'
+        
+    products:
+      create:
+        product_created: 'Producto creado'
+        product_no_created: 'Error al crear el producto'
+      edit:
+        product_no_found: 'Producto no encontrado'
+      update:
+        product_updated: 'Producto actualizado'
+        product_no_updated: 'Error al actualizar el producto'
+      verify_admin_and_product:
+        product_no_found: 'Producto no encontrado'
 
   layouts:
     application:
