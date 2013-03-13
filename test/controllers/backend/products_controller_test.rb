@@ -7,7 +7,7 @@ describe Backend::ProductsController do
   
   describe 'show' do
     it "when haven't products" do          
-      get :show, id: 2
+      get :show, id: 200
 
       assert_response :success    
       assigns[:product].wont_be_nil      
@@ -25,8 +25,7 @@ describe Backend::ProductsController do
   describe 'new' do
     let(:params) {
       {
-        product: { id: 3, name: 'Toshiba TV', description: 'Toshiba 3D Smart TV 50"', price: 1200, inventory: 2, active: true },
-        admin: { id: 1 }
+        product: { name: 'Toshiba TV', description: 'Toshiba 3D Smart TV 50"', price: 1200, inventory: 2, active: true, tags: 'tv' }
       }
     }
     
@@ -39,34 +38,21 @@ describe Backend::ProductsController do
     end
   end
   
-#   describe 'edit' do
-#     let(:params) {
-#       {
-#         product: { id: 1, name: 'Samsung TV', description: 'Samsung Smart TV 46"', price: 8500, inventory: 4, active: true } 
-#       }
-#     }
+  describe 'edit' do
+    let(:params) {
+      {
+        product: { id: 1, name: 'Samsung TV', description: 'Samsung Smart TV 49"', price: 8500, inventory: 4, active: true, tags: 'samsung' } 
+      }
+    }
     
-#     it "should method edit display a form to edit the product attributes if admin own the product" do
-#       @product = Product.my_product(params[:product][:id], (stub_current_admin 100)).first
+    it "should display a form to edit the product attributes if admin own the product" do
+      get :edit, parms
       
-#       #get :edit, { 'product_id' => params[:id]}
-      
-#       assert_not_nil(@product, '')
-#       assert_response :success
-#       assert_template :edit
-#       assigns[:product].wont_be_nil
-#     end
-
-#     it "should redirect to new when user have no products to edit" do
-#       @product = Product.my_product(params[:product][:id], (stub_current_admin 200)).first
-
-#       #get :edit
-      
-#       assert_nil(@product, '')
-#       assert_redirected_to new_backend_product_path
-#       flash[:notice].wont_be_nil
-#     end
-#   end
+      assert_response :success
+      assert_template :edit
+      assigns[:product].wont_be_nil
+    end
+   end
   
 #   describe 'update' do
 #     let(:params) {
