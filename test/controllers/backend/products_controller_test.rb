@@ -6,8 +6,8 @@ describe Backend::ProductsController do
   end
   
   describe 'show' do
-    it "when haven't product" do          
-      get :show, id: 2    
+    it "when haven't products" do          
+      get :show, id: 2
 
       assert_response :success    
       assigns[:product].wont_be_nil      
@@ -22,32 +22,22 @@ describe Backend::ProductsController do
     end
   end
   
-#   describe 'new' do
-#     let(:params) {
-#       {
-#         product: { id: 1, name: 'Toshiba TV', description: 'Toshiba 3D Smart TV 50"', price: 1200, inventory: 2, active: true },
-#         admin: { id: 1 } 
-#       }
-#     }
+  describe 'new' do
+    let(:params) {
+      {
+        product: { id: 3, name: 'Toshiba TV', description: 'Toshiba 3D Smart TV 50"', price: 1200, inventory: 2, active: true },
+        admin: { id: 1 }
+      }
+    }
     
-#     it "should method new display a form to register a new product" do
-#       [:params][:admin][:id] = 2
-      
-#       get :new, params
+    it "should method new display a form to register a new product" do
+      get :new, params
 
-#       assert_response :success
-#       assert_template :new
-#       assigns[:product].wont_be_nil
-#     end
-
-#     it "should method new display a form to register a new product even if admin already has products" do
-#       get :new, params
-
-#       assert_response :success
-#       assert_template :new
-#       assigns[:product].wont_be_nil
-#     end
-#   end
+      assert_response :success
+      assert_template :new
+      assigns[:product].wont_be_nil
+    end
+  end
   
 #   describe 'edit' do
 #     let(:params) {
