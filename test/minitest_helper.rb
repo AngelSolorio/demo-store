@@ -17,6 +17,18 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def stub_current_admin(id = 100)
+    ApplicationController.class_exec(id) do |id|
+      body = -> { @admin ||= Admin.find id }
+      define_method :current_admin, body
+    end
+  end
+  
+  def destroy_session!
+    ApplicationController.class_eval do
+      define_method :admin_logged?, -> { false }
+    end
+  end
 end
 
 class MiniTest::Unit::TestCase
